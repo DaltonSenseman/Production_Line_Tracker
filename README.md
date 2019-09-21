@@ -78,44 +78,44 @@ GUI, basic database
 
 - Week 1
 
-    Create JavaFX project. See IntelliJ page and IntelliJ Help
-    Share to private repository on GitHub. See GitHub page.
-    Create README. Details in Documentation Expectations at bottom of page. 
+    - Create JavaFX project. See IntelliJ page and IntelliJ Help
+    - Share to private repository on GitHub. See GitHub page.
+    - Create README. Details in Documentation Expectations at bottom of page. 
 
 - Week 2
 
-    Add a tab view with three tabs: Product Line, Produce, and Production Log
-    Add a CSS file
-    Quality expectations: see bottom of page
-    Style expectations: see bottom of page
-    Documentation expectations: see bottom of page
+    - Add a tab view with three tabs: Product Line, Produce, and Production Log
+    - Add a CSS file
+    - Quality expectations: see bottom of page
+    - Style expectations: see bottom of page
+    - Documentation expectations: see bottom of page
 
 - Week 3
 
-    In the Product Line tab
-        In the AnchorPane
-            Add a 2x3 GridPane
-                Add a Label and text field for Product Name in row 0, columns 0 and 1
-                Add a Label and text field for Manufacturer in row 1, columns 0 and 1
-                Add a Label and ChoiceBox for Item Type in row 2, columns 0 and 1
-            Add a Button that says Add Product
-                Add an event handler to the button click event. For now, just have it print to the console (System.out.println)
-            Add a Label and a Table View for Existing Products
-    In the Produce tab
-        In the AnchorPane
-            Add a Label and ListView for Choose Product
-            Add a Label and ComboBox (data type String) for Choose Quantity
-            Add a Button that says Record Production
-                For now, just have the button print to the console (System.out.println)
-    In the Production Log tab
-        In the AnchorPane
-            Add a TextArea
+    - In the Product Line tab
+        - In the AnchorPane
+            - Add a 2x3 GridPane
+                - Add a Label and text field for Product Name in row 0, columns 0 and 1
+                - Add a Label and text field for Manufacturer in row 1, columns 0 and 1
+                - Add a Label and ChoiceBox for Item Type in row 2, columns 0 and 1
+            - Add a Button that says Add Product
+                - Add an event handler to the button click event. For now, just have it print to the console (System.out.println)
+            - Add a Label and a Table View for Existing Products
+    - In the Produce tab
+        - In the AnchorPane
+            - Add a Label and ListView for Choose Product
+            - Add a Label and ComboBox (data type String) for Choose Quantity
+            - Add a Button that says Record Production
+                - For now, just have the button print to the console (System.out.println)
+    - In the Production Log tab
+        - In the AnchorPane
+            - Add a TextArea
 
 - Week 4
 
-    Install database software if necessary
-    Create database 
-        Similar to...
+    - Install database software if necessary
+    - Create database 
+        - Similar to...
 
 create table Product
 
@@ -162,10 +162,10 @@ create table ProductionRecord
 
 - Week 5
 
-    Add Product to database in Product Line tab
-        Could be hard coded to button click or built from user interface, like INSERT INTO Product(type, manufacturer, name) VALUES ( 'AUDIO', 'Apple', 'iPod' );
-    In the Produce tab, for the ComboBox
-        Populate with values 1-10 in an initialize method in the Controller
-        getSelectionModel().selectFirst();
-        setEditable(true);
-    Prepare for submission
+    - Add Product to database in Product Line tab
+        - Could be hard coded to button click or built from user interface, like INSERT INTO Product(type, manufacturer, name) VALUES ( 'AUDIO', 'Apple', 'iPod' );
+    - In the Produce tab, for the ComboBox
+        - Populate with values 1-10 in an initialize method in the Controller
+        - getSelectionModel().selectFirst();
+        - setEditable(true);
+    - Prepare for submission
