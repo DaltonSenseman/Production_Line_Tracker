@@ -59,7 +59,7 @@ public class Controller {
 
     try {
       Class.forName(JDBC_DRIVER);
-      System.out.println("Connecting to database...");
+      System.out.println("Connecting to database....");
       conn = DriverManager.getConnection(DB_URL, USER, PASS);
       stmt = conn.createStatement();
       String sql = "INSERT INTO PRODUCT(TYPE, MANUFACTURER, NAME) "
