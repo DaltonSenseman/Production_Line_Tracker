@@ -7,35 +7,36 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Program is to create and show a production system that records and produces items.
+ * Main class of the program calls to the start method to create a stage for the GUI to be created
+ * inside of. Extends Application for JavaFX environments.
  *
  * @author Dalton Senseman
- * @version a1.0
- * @since 2019-21-09
+ * @since 0.2
  */
 public class Main extends Application {
 
   /**
-   * GUI start method launched from mai nto create the stage for the .fxml to create the GUI.
+   * Start method for the JavaFX environment for the GUI to be created inside of, the default
+   * resolution is 480p for the stage. The method throws a general exception.
    *
-   * @param primaryStage sets the Stage for the GUI to be placed inside of
-   * @throws Exception generic exception if program fails to launch
+   * @param primaryStage takes a Stage object for the GUI to be created in.
+   * @throws Exception general exception for failure to create a new stage.
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-    primaryStage.setTitle("Production Tracker");
+    Parent root = FXMLLoader.load(getClass().getResource("mainGUI.fxml"));
+    primaryStage.setTitle("Production Line Tracker");
     primaryStage.setScene(new Scene(root, 720, 480));
     primaryStage.show();
-
   }
 
   /**
-   * Main method to drive the program and call for start method to run.
+   * Main method of the program.
    *
-   * @param args main driver naming convention
+   * @param args String array and general convention for the main driver.
    */
   public static void main(String[] args) {
     launch(args);
   }
+
 }

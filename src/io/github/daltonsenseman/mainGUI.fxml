@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<editor-fold desc="Import Statements">-->
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<!--</editor-fold>-->
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+  prefHeight="480.0" prefWidth="720.0" stylesheets="@GUIStyle.css"
+  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="io.github.daltonsenseman.MainController">
+  <top>
+    <MenuBar BorderPane.alignment="CENTER">
+      <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" text="Logout"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Edit">
+        <MenuItem mnemonicParsing="false" text="Delete"/>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Help">
+        <MenuItem mnemonicParsing="false" text="About"/>
+      </Menu>
+    </MenuBar>
+  </top>
+  <center>
+    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+      BorderPane.alignment="CENTER">
+      <Tab text="Produce">
+        <GridPane>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0"
+              prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="10.0"
+              prefWidth="100.0"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0"
+              vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0"
+              vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="30.0"
+              vgrow="SOMETIMES"/>
+          </rowConstraints>
+          <ListView fx:id="prodListView" prefHeight="200.0" prefWidth="200.0"
+            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+          <Label text="Choose Product" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <font>
+              <Font size="36.0"/>
+            </font>
+          </Label>
+          <Button fx:id="recordProdBtn" mnemonicParsing="false"
+            onMouseClicked="#recordProdMouseClick" text="Record Production"
+            GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <font>
+              <Font size="14.0"/>
+            </font>
+            <GridPane.margin>
+              <Insets top="10.0"/>
+            </GridPane.margin>
+          </Button>
+          <FlowPane maxHeight="50.0" prefHeight="200.0" prefWidth="200.0"
+            GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <padding>
+              <Insets top="20.0"/>
+            </padding>
+            <Label text="Choose Quantity">
+              <font>
+                <Font size="18.0"/>
+              </font>
+              <FlowPane.margin>
+                <Insets right="20.0"/>
+              </FlowPane.margin>
+            </Label>
+            <ComboBox fx:id="chooseQntyCbBox" prefWidth="150.0"/>
+          </FlowPane>
+        </GridPane>
+      </Tab>
+      <Tab text="Product Line">
+        <GridPane>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          </rowConstraints>
+          <GridPane>
+            <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0"
+                prefWidth="100.0"/>
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0"
+                prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="50.0"
+                vgrow="SOMETIMES"/>
+              <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="30.0"
+                vgrow="SOMETIMES"/>
+              <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="30.0"
+                vgrow="SOMETIMES"/>
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <GridPane.margin>
+              <Insets right="20.0"/>
+            </GridPane.margin>
+            <TextField fx:id="prodNameTxtField" maxWidth="400.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+              <GridPane.margin>
+                <Insets right="20.0"/>
+              </GridPane.margin>
+            </TextField>
+            <TextField fx:id="manuTxtField" maxWidth="400.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="2">
+              <GridPane.margin>
+                <Insets right="20.0"/>
+              </GridPane.margin>
+            </TextField>
+            <ChoiceBox fx:id="itypecbbox" prefWidth="150.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="3" GridPane.valignment="TOP"/>
+            <Label text="Product Name" GridPane.halignment="RIGHT" GridPane.rowIndex="1"
+              GridPane.valignment="BOTTOM">
+              <GridPane.margin>
+                <Insets right="20.0"/>
+              </GridPane.margin>
+              <font>
+                <Font size="18.0"/>
+              </font>
+            </Label>
+            <Label text="Manufacturer" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+              <GridPane.margin>
+                <Insets right="20.0"/>
+              </GridPane.margin>
+              <font>
+                <Font size="18.0"/>
+              </font>
+            </Label>
+            <Label text="Item Type" GridPane.halignment="RIGHT" GridPane.rowIndex="3"
+              GridPane.valignment="TOP">
+              <GridPane.margin>
+                <Insets right="20.0"/>
+              </GridPane.margin>
+              <font>
+                <Font size="18.0"/>
+              </font>
+            </Label>
+            <Button fx:id="prodAddBtn" mnemonicParsing="false"
+              onMouseClicked="#addProdMouseClick" text="Add Product" GridPane.columnIndex="1"
+              GridPane.rowIndex="4" GridPane.valignment="TOP">
+              <font>
+                <Font size="14.0"/>
+              </font>
+            </Button>
+          </GridPane>
+          <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0"
+            prefWidth="160.0" GridPane.columnIndex="1">
+            <Label text="Existing Products">
+              <font>
+                <Font size="24.0"/>
+              </font>
+            </Label>
+            <TableView fx:id="existingProdTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn id="existCol1" fx:id="existingProdCol1"
+                  maxWidth="1.7976931348623157E308" minWidth="125.0" prefWidth="125.0"
+                  text="Product Name"/>
+                <TableColumn id="existCol2" fx:id="existingProdCol2"
+                  maxWidth="1.7976931348623157E308" minWidth="125.0" prefWidth="125.0"
+                  text="Manufacturer"/>
+                <TableColumn id="existCol3" fx:id="existingProdCol3"
+                  maxWidth="1.7976931348623157E308" minWidth="125.0" prefWidth="125.0"
+                  text="Item Type"/>
+              </columns>
+            </TableView>
+          </SplitPane>
+        </GridPane>
+      </Tab>
+      <Tab text="Production Log">
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+          <center>
+            <TextArea fx:id="logTxtArea" prefHeight="200.0" prefWidth="200.0"
+              BorderPane.alignment="CENTER">
+              <BorderPane.margin>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+              </BorderPane.margin>
+            </TextArea>
+          </center>
+        </BorderPane>
+      </Tab>
+    </TabPane>
+  </center>
+</BorderPane>

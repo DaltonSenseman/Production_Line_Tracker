@@ -1,0 +1,23 @@
+/**
+ * This is the main CSS file for the Production Line Tracker and effects the main body of the GUI
+ * @author Dalton Senseman
+ * @Since 0.2
+ */
+
+#existCol1 {
+  -fx-background-color: lightblue;
+  -fx-border-width: 1;
+  -fx-border-color: grey;
+}
+
+#existCol2 {
+  -fx-background-color: lightblue;
+  -fx-border-width: 1;
+  -fx-border-color: grey;
+}
+
+#existCol3 {
+  -fx-background-color: lightblue;
+  -fx-border-width: 1;
+  -fx-border-color: grey;
+}
