@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="data">
+  <database-model serializer="dbm" dbms="H2" family-id="H2" format-version="4.15">
+    <root id="1">
+      <ServerVersion>1.4.196</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="DATA">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <schema id="3" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="4" parent="2" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <table id="5" parent="4" name="PRODUCT"/>
+    <table id="6" parent="4" name="PRODUCTIONRECORD"/>
+    <column id="7" parent="5" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_F75CC28F_67C3_4042_AFC0_A9AA19F93E9E)</DefaultExpression>
+    </column>
+    <column id="8" parent="5" name="NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR|12s</DataType>
+    </column>
+    <column id="9" parent="5" name="TYPE">
+      <Position>3</Position>
+      <DataType>VARCHAR|12s</DataType>
+    </column>
+    <column id="10" parent="5" name="MANUFACTURER">
+      <Position>4</Position>
+      <DataType>VARCHAR|12s</DataType>
+    </column>
+    <index id="11" parent="5" name="PRIMARY_KEY_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="12" parent="5" name="PRODUCT_ID_UINDEX">
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="13" parent="5" name="PRODUCT_PK">
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="14" parent="6" name="PRODUCTION_NUM">
+      <Position>1</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_3EC176CB_4CB3_493D_AFA0_E9A3AB6FF8BA)</DefaultExpression>
+    </column>
+    <column id="15" parent="6" name="PRODUCT_ID">
+      <Position>2</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+    </column>
+    <column id="16" parent="6" name="SERIAL_NUM">
+      <Position>3</Position>
+      <DataType>VARCHAR|12s</DataType>
+    </column>
+    <column id="17" parent="6" name="DATE_PRODUCED">
+      <Position>4</Position>
+      <DataType>TIMESTAMP(23,10)|93s</DataType>
+    </column>
+  </database-model>
+</dataSource>
