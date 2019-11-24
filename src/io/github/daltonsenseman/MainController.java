@@ -6,11 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,6 +46,8 @@ public class MainController {
   final ObservableList<Product> productLine = FXCollections.observableArrayList();
 
   final ObservableList<ProductionRecord> productRecord = FXCollections.observableArrayList();
+
+  final ArrayList<Integer> ProductCounts = new ArrayList<>();
 
   @FXML
   private TextField prodNameTxtField;
@@ -78,13 +83,60 @@ public class MainController {
   private TextField manuTxtField;
 
   @FXML
-  private ChoiceBox<ItemType> itypecbbox;
-  //</editor-fold>
+  private TextField passTxtBox;
 
   @FXML
-  void recordProdMouseClick(MouseEvent event) {
+  private Button addEmplyBtn;
 
+  @FXML
+  private ChoiceBox<ItemType> itypecbbox;
+
+  @FXML
+  private TextField nameTxtBox;
+
+  //</editor-fold>
+
+  /**
+   * Records the selected production options and increments the database and adds the production to
+   * the record.
+   *
+   * @param event on mouse event clicking button
+   */
+  @FXML
+  void recordProdMouseClick(MouseEvent event) {
+    Product selectionChoice = prodListView.getSelectionModel().getSelectedItem();
+    int numTomMake = Integer.parseInt(chooseQntyCbBox.getValue());
+    String idNum = String.valueOf(prodListView.getSelectionModel().getSelectedIndices());
+    idNum = idNum.replaceAll("[\\[\\](){}]", "");
+    int type = 0;
+    getProductCount();
+    switch (selectionChoice.getType()) {
+      case "AUDIO":
+        type = 0;
+        break;
+      case "VISUAL":
+        type = 1;
+        break;
+      case "AUDIO_MOBILE":
+        type = 2;
+        break;
+      case "VISUAL_MOBILE":
+        type = 3;
+        break;
+      default:
+        System.out.println("type not found.");
+        break;
+    }
+    int amountMade = ProductCounts.get(type);
+    for (int i = 0; i < numTomMake; i++) {
+      ProductionRecord addToRecord = new ProductionRecord(selectionChoice, amountMade, idNum);
+      addToProdRecord(addToRecord);
+      amountMade++;
+
+    }
+    storeProductCount(type, amountMade);
     System.out.println("Recorded!");
+    populateProductionLog(productRecord);
   }
 
   /**
@@ -127,13 +179,20 @@ public class MainController {
 
       // Takes in values supplied by user and injects them to the database
       String sql = "INSERT INTO PRODUCT(TYPE, MANUFACTURER, NAME)"
-          + "VALUES('" + itype + "','" + manuName + "','" + proName + "')";
-      stmt.executeUpdate(sql);
+          + "VALUES(?,?,?)";
+
+      PreparedStatement prep = conn.prepareStatement(sql);
+      prep.setString(1, itype);
+      prep.setString(2, manuName);
+      prep.setString(3, proName);
+
+      prep.executeUpdate();
 
       System.out.println("New Product Added!");
       // closes database.
       stmt.close();
       conn.close();
+      prep.close();
 
     } catch (ClassNotFoundException e) {
       System.out.println("Failed to push to database. Driver not Found.");
@@ -145,7 +204,7 @@ public class MainController {
     }
 
     existingProdCol1.setCellValueFactory(new PropertyValueFactory<>("name"));
-    productLine.add(new Widget(proName, itype, manuName));
+    productLine.add(new Widget(proName, manuName, itype));
     existingProdTable.setItems(productLine);
     existingProdCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
     existingProdCol3.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
@@ -190,8 +249,26 @@ public class MainController {
     testMultimedia();
     populateProductionLog(productRecord);
     populateExistingProducts(productLine);
+    ProductCounts.add(0);
+    ProductCounts.add(0);
+    ProductCounts.add(0);
+    ProductCounts.add(0);
   }
 
+  /**
+   * Adds Employees to the system taking Uses's name and a password and sending them to be
+   * automatically formatted and verified as good before setting them to the user.
+   *
+   * @param event mouse click event onto the button.
+   */
+  @FXML
+  void addEmployeeBtnClick(MouseEvent event) {
+    String name = nameTxtBox.getText();
+    String passwrd = passTxtBox.getText();
+    Employee addNewEmployee = new Employee(name, passwrd);
+    System.out.println(addNewEmployee.toString());
+
+  }
 
   /**
    * This is a temporary method to test the functionality of the Products creating a stub to show
@@ -259,14 +336,14 @@ public class MainController {
       while (rs.next()) {
 
         existingProdCol1.setCellValueFactory(new PropertyValueFactory<>("name"));
-        productLine.add(new Widget(rs.getString(2), rs.getString(3), rs.getString(4)));
+        productLine.add(new Widget(rs.getString(2), rs.getString(4), rs.getString(3)));
 
         // sets the Existing products to the product list view.
         prodListView.setItems(productLine);
 
         existingProdTable.setItems(productLine);
-        existingProdCol2.setCellValueFactory(new PropertyValueFactory<>("type"));
-        existingProdCol3.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        existingProdCol2.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        existingProdCol3.setCellValueFactory(new PropertyValueFactory<>("type"));
 
       }
       System.out.println("Existing Products populated!");
@@ -294,7 +371,7 @@ public class MainController {
    *
    * @param conn the connection statement value, if == null then connection is safe.
    * @param stmt the statement value, if == null then connection is safe.
-   * @param rs the result statement value, if == null then connection is safe.
+   * @param rs   the result statement value, if == null then connection is safe.
    */
   private void connectionFinalClose(Connection conn, Statement stmt, ResultSet rs) {
     connAndStmtFinallyClose(conn, stmt);
@@ -313,7 +390,7 @@ public class MainController {
    * products continue off of where the last item stopped at.
    *
    * @param productRecord a ProductionRecord array list to populate the log and gather data on what
-   *     products have been made and to what SN they last stopped at.
+   *                      products have been made and to what SN they last stopped at.
    */
   public void populateProductionLog(ObservableList<ProductionRecord> productRecord) {
     Properties prop = new Properties();
@@ -350,10 +427,11 @@ public class MainController {
       while (rs.next()) {
         productRecord.add(new ProductionRecord(rs.getInt(1), rs.getInt(2),
             rs.getString(3), rs.getDate(4)));
-        for (ProductionRecord prod : productRecord) {
-          logTxtArea.setText(prod.toString());
-        }
-
+      }
+      logTxtArea.clear();
+      for (ProductionRecord prod : productRecord) {
+        logTxtArea.appendText(prod.toString());
+        logTxtArea.appendText("\n");
       }
       System.out.println("Database Records Pulled!");
       // closes database.
@@ -370,4 +448,188 @@ public class MainController {
       connectionFinalClose(conn, stmt, rs);
     }
   }
+
+  /**
+   * Takes the counts of each type of product from the database and puts them into a Arraylist.
+   */
+  public void getProductCount() {
+
+    Properties prop = new Properties();
+    // looks into the properties file for user and password to database.
+    try (InputStream input = new FileInputStream("./res/data.properties")) {
+      prop.load(input);
+
+    } catch (FileNotFoundException e) {
+      System.out.println("Properties File not found!");
+    } catch (IOException ex) {
+      System.out.println("IO exception occurred!");
+    }
+
+    final String jdbcDriver = "org.h2.Driver";
+    final String dbUrl = "jdbc:h2:./res/data";
+    String user = prop.getProperty("db.username");
+    String pass = prop.getProperty("db.password");
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet rs = null;
+
+    try {
+      Class.forName(jdbcDriver);
+      System.out.println("Connecting to database....");
+      conn = DriverManager.getConnection(dbUrl, user, pass);
+      stmt = conn.createStatement();
+
+      // Takes in values supplied by user and injects them to the database
+      String sql = "SELECT * FROM PRODUCTCOUNT";
+      rs = stmt.executeQuery(sql);
+      int index = 0;
+      while (rs.next()) {
+        for (int i = 1; i < 5; i++) {
+          int number = rs.getInt(i);
+          ProductCounts.set(index, number);
+          index++;
+        }
+      }
+      System.out.println("Existing Products Counts populated!");
+      // closes database.
+      rs.close();
+      stmt.close();
+      conn.close();
+
+    } catch (ClassNotFoundException e) {
+      System.out.println("Failed to push to database. Driver not Found.");
+
+    } catch (SQLException e) {
+      System.out.println("Failed to pull from database.");
+    } finally {
+      //closes database connection in the event of an exception.
+      connectionFinalClose(conn, stmt, rs);
+    }
+
+  }
+
+  /**
+   * Takes the new value of the amount of items made and pushes them to the database
+   * @param type what type of item was changed
+   * @param newAmount how many new items were added in the production run
+   */
+  public void storeProductCount(int type, int newAmount) {
+    Properties prop = new Properties();
+    // Uses the data properties file to grab the user and password to the H2 database.
+    try (InputStream input = new FileInputStream("./res/data.properties")) {
+      prop.load(input);
+
+    } catch (FileNotFoundException e) {
+      System.out.println("Properties File not found!");
+    } catch (IOException ex) {
+      System.out.println("IO exception occurred!");
+    }
+
+    final String jdbcDriver = "org.h2.Driver";
+    final String dbUrl = "jdbc:h2:./res/data";
+    String user = prop.getProperty("db.username");
+    String pass = prop.getProperty("db.password");
+    Connection conn = null;
+    Statement stmt = null;
+
+    try {
+      Class.forName(jdbcDriver);
+      System.out.println("Connecting to database....");
+      conn = DriverManager.getConnection(dbUrl, user, pass);
+      stmt = conn.createStatement();
+      String sql = null;
+
+      if (type == 0) {
+        sql = "UPDATE PRODUCTCOUNT SET NUM_OF_AU =" + newAmount + "";
+      } else if (type == 1) {
+        sql = "UPDATE PRODUCTCOUNT SET NUM_OF_VI =" + newAmount + "";
+      } else if (type == 2) {
+        sql = "UPDATE PRODUCTCOUNT SET NUM_OF_AM =" + newAmount + "";
+      } else if (type == 3) {
+        sql = "UPDATE PRODUCTCOUNT SET NUM_OF_VM =" + newAmount + "";
+      } else {
+        System.out.println("Column not found error");
+      }
+      stmt.executeUpdate(sql);
+
+      System.out.println("Product counts Added!");
+      // closes database.
+      stmt.close();
+      conn.close();
+
+    } catch (ClassNotFoundException e) {
+      System.out.println("Failed to push to database. Driver not Found.");
+    } catch (SQLException e) {
+      System.out.println("Failed to push to database.");
+    } finally {
+      // closes connections in the event an exception occurred.
+      connAndStmtFinallyClose(conn, stmt);
+    }
+
+  }
+
+  /**
+   * Pushes the new product added and sends it into the productionRecord table so it can be
+   * displayed in the log or kept on hand.
+   * @param newProduct the new product information to add to the record.
+   */
+  public void addToProdRecord(ProductionRecord newProduct) {
+    Properties prop = new Properties();
+    // Uses the data properties file to grab the user and password to the H2 database.
+    try (InputStream input = new FileInputStream("./res/data.properties")) {
+      prop.load(input);
+
+    } catch (FileNotFoundException e) {
+      System.out.println("Properties File not found!");
+    } catch (IOException ex) {
+      System.out.println("IO exception occurred!");
+    }
+
+    final String jdbcDriver = "org.h2.Driver";
+    final String dbUrl = "jdbc:h2:./res/data";
+    String user = prop.getProperty("db.username");
+    String pass = prop.getProperty("db.password");
+    Connection conn = null;
+    Statement stmt = null;
+
+    // grabs the information stored in the FXML id links to variables for use in the SQL statements.
+    int id = newProduct.getProductID();
+    String serNum = newProduct.getSerialNum();
+    Date dateProd = newProduct.getProdDate();
+    java.sql.Timestamp sqlDate = new java.sql.Timestamp(dateProd.getTime());
+
+    try {
+      Class.forName(jdbcDriver);
+      System.out.println("Connecting to database....");
+      conn = DriverManager.getConnection(dbUrl, user, pass);
+      stmt = conn.createStatement();
+
+      // Takes in values supplied by user and injects them to the database
+      String sql = "INSERT INTO PRODUCTIONRECORD(PRODUCT_ID, SERIAL_NUM, DATE_PRODUCED)"
+          + "VALUES(?,?,?)";
+
+      PreparedStatement prep = conn.prepareStatement(sql);
+      prep.setString(1, String.valueOf(id));
+      prep.setString(2, serNum);
+      prep.setString(3, String.valueOf(sqlDate));
+
+      prep.executeUpdate();
+
+      System.out.println("New Product Added!");
+      // closes database.
+      stmt.close();
+      conn.close();
+      prep.close();
+
+    } catch (ClassNotFoundException e) {
+      System.out.println("Failed to push to database. Driver not Found.");
+    } catch (SQLException e) {
+      System.out.println("Failed to push to database.");
+    } finally {
+      // closes connections in the event an exception occurred.
+      connAndStmtFinallyClose(conn, stmt);
+    }
+
+  }
 }
+

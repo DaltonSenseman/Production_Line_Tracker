@@ -19,10 +19,10 @@ public class MoviePlayer extends Product implements MultimediaControl {
    * name, manufacturer, and set the Type to VISUAL. Setting the rest of the fields according to the
    * information passed in as Params.
    *
-   * @param name the name of the product itself.
+   * @param name         the name of the product itself.
    * @param manufacturer the manufacturer or the product.
-   * @param screen Screen Object to hold the refresh rate and resolution.
-   * @param monitorType MonitorType Object to pass in the Screen Enums.
+   * @param screen       Screen Object to hold the refresh rate and resolution.
+   * @param monitorType  MonitorType Object to pass in the Screen Enums.
    */
   public MoviePlayer(String name, String manufacturer, Screen screen, MonitorType monitorType) {
     super(name, manufacturer, "VISUAL");

@@ -4,6 +4,10 @@
  * @Since 0.2
  */
 
+.root {
+  -fx-background-color: #b0e0e6;
+}
+
 #existCol1 {
   -fx-background-color: lightblue;
   -fx-border-width: 1;

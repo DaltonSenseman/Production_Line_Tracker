@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * This class holds the information of Products that have been produced by the program, the program
  * uses this class as a format for data from the database so they are correctly placed into the
- * right fields. And displayed correctly when used to populate the record log tab.
+ * right fields. And displayed correctly when used to populate the record log tab..
  *
  * @author Dalton Senseman
  * @since 0.2
@@ -35,9 +35,9 @@ class ProductionRecord {
    * Constructor to populate the fields of the Production Object so they may be used.
    *
    * @param productionNumber int of the number/run the production is currently on.
-   * @param productID int of the unique ID of the type of product.
-   * @param serialNumber String of the unique ID each unique created product has.
-   * @param dateProduced Date the date that the product was made on.
+   * @param productID        int of the unique ID of the type of product.
+   * @param serialNumber     String of the unique ID each unique created product has.
+   * @param dateProduced     Date the date that the product was made on.
    */
   public ProductionRecord(int productionNumber, int productID, String serialNumber,
       Date dateProduced) {
@@ -52,19 +52,21 @@ class ProductionRecord {
    * last product made so Serial Nums are sequential.
    *
    * @param producedProduct Product the info of the Product being made.
-   * @param amountCreated Int of the amount Created so far.
+   * @param amountCreated   Int of the amount Created so far.
    */
-  public ProductionRecord(Product producedProduct, int amountCreated) {
-    //this.serialNumber = producedProduct.getManufacturer().substring(0,3).toUpperCase()
-    //   + producedProduct.getType() + producedProduct.getId();
+  public ProductionRecord(Product producedProduct, int amountCreated, String idNumber) {
+    this.productID = Integer.parseInt(idNumber);
+    this.dateProduced = new Date();
+    this.serialNumber = producedProduct.getManufacturer().substring(0, 3).toUpperCase()
+        + producedProduct.getTypeID() + (amountCreated + 1);
   }
 
   /**
    * This method overrides the toString method from the Object class and allows the user to grab the
-   *     current values of the fields of Record as a String.
+   * current values of the fields of Record as a String.
    *
    * @return A 1 line string holding the stub of the record of this product in this format.
-   *     productNumber, ProductID, SerialNumber, dataProduced.
+   * productNumber, ProductID, SerialNumber, dataProduced.
    */
   @Override
   public String toString() {
@@ -112,7 +114,7 @@ class ProductionRecord {
    * sets the serialNumber field.
    *
    * @param serialNumber String of the Products SN format(ID(manufacturer first 3 letters)ENUM type,
-   *     00000{incrementing unique number})
+   *                     00000{incrementing unique number})
    */
   public void setSerialNum(String serialNumber) {
     this.serialNumber = serialNumber;
@@ -122,7 +124,7 @@ class ProductionRecord {
    * gets the current value of serialNum.
    *
    * @return string of the product unique SN. format(ID(manufacturer first 3 letters)ENUM type,
-   *     00000{incrementing unique number})
+   * 00000{incrementing unique number})
    */
   public String getSerialNum() {
     return serialNumber;

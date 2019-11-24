@@ -11,7 +11,6 @@ package io.github.daltonsenseman;
  * @author Dalton Senseman
  * @since 0.2
  */
-@SuppressWarnings("unused")
 public enum ItemType {
   AUDIO("AU"),
   VISUAL("VI"),

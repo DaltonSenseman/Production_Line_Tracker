@@ -12,6 +12,7 @@ package io.github.daltonsenseman;
 public abstract class Product implements Item {
 
   private int id;
+  private ItemType typeID;
   private String type;
   private String manufacturer;
   private String name;
@@ -19,22 +20,23 @@ public abstract class Product implements Item {
   /**
    * Constructor for general products only setting the values from Item Interface.
    *
-   * @param name a String of the name of the product/item.
+   * @param name         a String of the name of the product/item.
    * @param manufacturer a String of the manufacturer that creates the item.
-   * @param type the type of item for the enum ItemType.
+   * @param type         the type of item for the enum ItemType.
    */
   Product(String name, String manufacturer, String type) {
     this.name = name;
     this.manufacturer = manufacturer;
     this.type = type;
+    this.typeID = ItemType.valueOf(type);
   }
 
   /**
    * This method overrides the toString method from the Object class and allows the user to grab the
-   *     current values of the fields of Product as a String.
+   * current values of the fields of Product as a String.
    *
    * @return A 3 line String the first showing the Name and the second line Manufacturer and the
-   *     last line holding the ENUM type.
+   * last line holding the ENUM type.
    */
   @Override
   public String toString() {
@@ -105,6 +107,15 @@ public abstract class Product implements Item {
   public String getType() {
     return type;
   }
+
+  /**
+   * Sets the Enum of Type
+   *
+   * @return Type turned into its Enum.
+   */
+  public String getTypeID() {
+    return typeID.code();
+  }
 }
 
 /**
@@ -119,9 +130,9 @@ class Widget extends Product {
    * A constructor that takes in the name, manufacturer and type of the item to be created and calls
    * upon the super constructor of Product to set the fields of the item.
    *
-   * @param name a String of the items name.
+   * @param name         a String of the items name.
    * @param manufacturer a String of the manufacturer that makes the item.
-   * @param type a String of the ENUM that the item is.
+   * @param type         a String of the ENUM that the item is.
    */
   public Widget(String name, String manufacturer, String type) {
     super(name, manufacturer, type);

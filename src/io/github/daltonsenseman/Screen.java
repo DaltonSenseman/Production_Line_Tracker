@@ -17,8 +17,8 @@ public class Screen implements ScreenSpec {
   /**
    * Constructor to populate the fields of the class with the screen information.
    *
-   * @param resolution String of the resolution (720p, 1080p.... etc...)
-   * @param refreshrate Int of the refreshrate how fast the screen refreshes pixels in Hertz.
+   * @param resolution   String of the resolution (720p, 1080p.... etc...)
+   * @param refreshrate  Int of the refreshrate how fast the screen refreshes pixels in Hertz.
    * @param responsetime Int of the response time how fast the screen takes in new data in milisec.
    */
   public Screen(String resolution, int refreshrate, int responsetime) {
@@ -59,7 +59,7 @@ public class Screen implements ScreenSpec {
    * current values of the fields of Screen as a String.
    *
    * @return A 3 line String the first showing resolution the second line refreshrate, and the last
-   *     one holding responsetime..
+   * one holding responsetime..
    */
   public String toString() {
     return "Resolution: " + this.resolution + "\nRefresh rate: " + this.refreshrate

@@ -19,9 +19,9 @@ public class AudioPlayer extends Product implements MultimediaControl {
    * constructor from @code product passing up the values and affixing type param to (AUDIO), the
    * constructor then sets the fields.
    *
-   * @param name the item name of the AudioPlayer
-   * @param manufacturer name of the manufacturer of the AudioPlayer
-   * @param supportedAudioFormats format of Audio (mp3, wav. etc..)
+   * @param name                     the item name of the AudioPlayer
+   * @param manufacturer             name of the manufacturer of the AudioPlayer
+   * @param supportedAudioFormats    format of Audio (mp3, wav. etc..)
    * @param supportedPlaylistFormats format of steaming media audio (M3U, ASX, etc...)
    */
   public AudioPlayer(String name, String manufacturer, String supportedAudioFormats,
