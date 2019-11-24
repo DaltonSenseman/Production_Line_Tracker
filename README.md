@@ -16,6 +16,8 @@ In addition to the ability to record production, the software also needs the abi
 
 ![alt text](https://github.com/DaltonSenseman/Production_Line_Tracker/blob/master/docs/ClassDiagram.PNG)
 
+![alt text](https://github.com/DaltonSenseman/Production_Line_Tracker/blob/master/docs/DataDiagrams.PNG)
+
 **Demo**
 ![alt text](https://github.com/DaltonSenseman/Production_Line_Tracker/blob/master/docs/Demo.gif)
 
