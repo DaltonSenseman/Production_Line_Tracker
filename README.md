@@ -10,6 +10,12 @@ Management would like the production tracking to be more automated so the worker
 
 In addition to the ability to record production, the software also needs the ability to add to the product line (the catalog of products that are able to be produced).
 
+**Documentation**
+
+[Production Line Documents](https://daltonsenseman.github.io/Production_Line_Tracker/index.html)
+
+
+
 -   **Goals** (high level intended outcomes; for software, a Product Backlog)
     -   Hypothetical / Real world
         1.  Allow a user to add new products that are able to be produced and store them in a collection.
